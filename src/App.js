@@ -1,10 +1,26 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { lazy, Suspense } from "react";
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+
+const HomePage = lazy(() => import("./Pages/HomePage"));
+const AboutPage = lazy(() => import("./Pages/AboutPage"));
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "about",
+    element: <AboutPage />,
+  },
+]);
 
 function App() {
   return (
     <div className="App">
-      <h1>This will be todo app update</h1>
+      <Suspense fallback={<h1>Getting...</h1>}>
+        <RouterProvider router={router} />
+      </Suspense>
     </div>
   );
 }
